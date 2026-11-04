@@ -22,8 +22,14 @@ Available Adapters:
     - LangGraph: `@cage_guard` decorator for LangGraph node functions
 """
 
+from src.gateway.client.adapters.handover_relay import (
+    DirtyStateRejectionError,
+    HandoverRelayManager,
+)
 from src.gateway.client.adapters.langgraph import cage_guard
 
 __all__ = [
+    "DirtyStateRejectionError",
+    "HandoverRelayManager",
     "cage_guard",
 ]

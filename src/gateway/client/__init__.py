@@ -24,6 +24,10 @@ boundaries: no imports from Layer 2 (domain plugins), Layer 3 (integrations),
 or vendor SDKs.
 """
 
+from src.gateway.client.adapters.handover_relay import (
+    DirtyStateRejectionError,
+    HandoverRelayManager,
+)
 from src.gateway.client.adapters.langgraph import cage_guard
 from src.gateway.client.core import CageClient
 from src.gateway.client.crypto import generate_w3c_traceparent
@@ -32,6 +36,7 @@ from src.gateway.client.exceptions import (
     CageGatewayError,
     DeferralPending,
     PolicyViolationException,
+    QuotaExceededException,
     RoutingSealVerificationError,
 )
 from src.gateway.client.transport import create_mtls_transport
@@ -42,9 +47,12 @@ __all__ = [
     "CageClient",
     "CageGatewayError",
     "DeferralPending",
+    "DirtyStateRejectionError",
     "ExecutionGrant",
     "GovernanceEnvelope",
+    "HandoverRelayManager",
     "PolicyViolationException",
+    "QuotaExceededException",
     "RoutingSealVerificationError",
     "__version__",
     "cage_guard",

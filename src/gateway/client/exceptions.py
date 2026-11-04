@@ -158,3 +158,25 @@ class RoutingSealVerificationError(CageGatewayError):
     """
 
     pass
+
+
+class QuotaExceededException(CageGatewayError):
+    """Raised when an agent session exceeds its token or step-count quota (HTTP 429).
+
+    This exception signals to client SDK adapters (e.g. LangGraph @cage_guard)
+    that the session quota has been exhausted and that safe-landing / handover
+    procedures should be initiated.
+
+    Attributes:
+        message: Human-readable error message.
+        telemetry: Structured dictionary containing quota telemetry:
+            - 'quota_status': Status string ("BURST_ACTIVE", "EXHAUSTED", etc.)
+            - 'tokens_remaining': Remaining token balance
+            - 'burst_available': Whether burst overdraft is available
+            - 'accumulated_tokens': Total tokens consumed in session
+            - 'step_count': Current step count
+    """
+
+    def __init__(self, message: str, telemetry: dict[str, Any] | None = None) -> None:
+        self.telemetry = telemetry or {}
+        super().__init__(message)
